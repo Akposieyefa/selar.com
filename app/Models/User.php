@@ -44,7 +44,7 @@ class User extends Authenticatable
 
     public function wallet()
     {
-        return $this->belongsTo('App\Models\Wallet');
+        return $this->hasMany('App\Models\Wallet');
     }
 
     public function transaction()

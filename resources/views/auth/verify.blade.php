@@ -1,6 +1,5 @@
 @extends('layouts.app')
-
-@section('content')
+@section('content')<br><br><br><br>
     <div class="container mx-auto">
         <div class="flex flex-wrap justify-center">
             <div class="w-full max-w-sm">

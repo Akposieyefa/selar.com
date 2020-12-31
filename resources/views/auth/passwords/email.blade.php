@@ -1,9 +1,8 @@
 @extends('layouts.app')
-
-@section('content')
-    <div class="container mx-auto">
+@section('content')<br><br><br><br>
+    <div class="container md:mx-auto">
         <div class="flex flex-wrap justify-center">
-            <div class="w-full max-w-sm">
+            <div class="md:w-6/12 md:mx-auto">
 
                 @if (session('status'))
                     <div class="text-sm border border-t-8 rounded text-green-700 border-green-600 bg-green-100 px-3 py-4 mb-4" role="alert">

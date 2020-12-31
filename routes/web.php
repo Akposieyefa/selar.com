@@ -19,8 +19,18 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-Auth::routes();
+Route::get('/dashboard', 'HomeController@index')->name('dashboard');
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('customers', 'HomeController@customers')->name('customers');// get all registered customers for admin view
+Route::delete('/customer-destroy/{id}', 'HomeController@destroy')->name('customer-destroy');//deleting users from database
+Route::resource('wallets', 'WalletController'); //wallet controller
+Route::resource('/transactions', 'TransactionController'); //transaction controller
 
+Route::get('payment', 'PayPalController@payment')->name('payment');
+Route::get('cancel', 'PayPalController@cancel')->name('payment.cancel');
+Route::get('payment/success', 'PayPalController@success')->name('payment.success');
+
+
+Route::get('/text-pay-pal', function () {
+    return view('payment');
+});

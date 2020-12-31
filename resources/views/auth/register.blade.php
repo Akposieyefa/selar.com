@@ -1,9 +1,8 @@
 @extends('layouts.app')
-
-@section('content')
-    <div class="container mx-auto">
-        <div class="flex flex-wrap justify-center">
-            <div class="w-full max-w-sm">
+@section('content')<br><br><br><br>
+    <div class="container md:mx-auto">
+        <div class="flex flex-wrap">
+            <div class="md:w-10/12 md:mx-auto">
                 <div class="flex flex-col break-words bg-white border border-2 rounded shadow-md">
 
                     <div class="font-semibold bg-gray-200 text-gray-700 py-3 px-6 mb-0">

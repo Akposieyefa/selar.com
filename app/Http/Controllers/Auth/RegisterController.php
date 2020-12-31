@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
-use App\User;
+use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Mail\UserRegistered;
+use Illuminate\Support\Facades\Mail;
 
 class RegisterController extends Controller
 {
@@ -52,6 +54,8 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'phone' => ['required'],
+            'country' => ['required', 'string'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
@@ -64,10 +68,22 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user =  User::create([
             'name' => $data['name'],
             'email' => $data['email'],
+            'phone' => $data['phone'],
+            'country' => $data['country'],
+            'role_id' => 2,
             'password' => Hash::make($data['password']),
         ]);
+        $details = array(
+            'name' => $user->name
+        );
+        try {
+            Mail::to($user->email)->send(new UserRegistered($details));
+        }catch  (\Exception $e) {
+            return $e->getMessage();
+        }
+        return  $user;
     }
 }

@@ -103,6 +103,8 @@
       <path value="$PROJECT_DIR$/vendor/fruitcake/laravel-cors" />
       <path value="$PROJECT_DIR$/vendor/laravel/ui" />
       <path value="$PROJECT_DIR$/vendor/laravel-frontend-presets/tailwindcss" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-client" />
+      <path value="$PROJECT_DIR$/vendor/srmklive/paypal" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.2" />
