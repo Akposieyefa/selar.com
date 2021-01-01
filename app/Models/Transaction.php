@@ -11,7 +11,7 @@ class Transaction extends Model
 
     public function routeNotificationForSlack($notification)
     {
-        return 'https://hooks.slack.com/services/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';
+
     }
 
     protected  $fillable =[
