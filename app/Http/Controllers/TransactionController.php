@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Mail;
 use Auth;
 class TransactionController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -65,6 +66,7 @@ class TransactionController extends Controller
             return $e->getMessage();
         }
         try {
+
             Notification::route('slack', env('SLACK_WEBHOOK_URL'))
                 ->notify(new TransactionNotification());
         } catch (\Exception $e) {
@@ -99,20 +101,20 @@ class TransactionController extends Controller
         return  view('wallet.edit', ['data' => $data]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        $data = Transaction::find($id);
-        $data->status = "Approved";
-        $data->save();
-        dd('Thanks Akposieyefa');
-    }
+//    /**
+//     * Update the specified resource in storage.
+//     *
+//     * @param  \Illuminate\Http\Request  $request
+//     * @param  int  $id
+//     * @return \Illuminate\Http\Response
+//     */
+//    public function update(Request $request, $id)
+//    {
+//        $data = Transaction::find($id);
+//        $data->status = "Approved";
+//        $data->save();
+//        dd('Thanks Akposieyefa');
+//    }
 
     /**
      * Remove the specified resource from storage.

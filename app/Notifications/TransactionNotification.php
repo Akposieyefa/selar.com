@@ -55,7 +55,7 @@ class TransactionNotification  extends Notification
 
         return (new SlackMessage)
             ->from('Orutu Akposieyefa W', ':ghost:')
-            ->to('#wn-test-akpos')
+            ->to(env('SLACK_WEBHOOK_URL'))
             ->content('Fix service request by '.$message);
     }
 

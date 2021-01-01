@@ -11,7 +11,7 @@ class Transaction extends Model
 
     public function routeNotificationForSlack($notification)
     {
-
+        return env('SLACK_WEBHOOK_URL');
     }
 
     protected  $fillable =[

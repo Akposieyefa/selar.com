@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Omnipay\Omnipay;
-use App\Payment;
+use App\Models\Payment;
 
 class PaymentController extends Controller
 {
 
     public $gateway;
-
     public function __construct()
     {
         $this->gateway = Omnipay::create('PayPal_Rest');
-        $this->gateway->setClientId(env('PAYPAL_CLIENT_ID'));
-        $this->gateway->setSecret(env('PAYPAL_CLIENT_SECRET'));
+        $this->gateway->setClientId(config('app.pay-pal_client'));
+        $this->gateway->setSecret(config('app.pay-pal_secret'));
         $this->gateway->setTestMode(true); //set it to 'false' when go live
     }
 
@@ -31,6 +31,7 @@ class PaymentController extends Controller
             try {
                 $response = $this->gateway->purchase(array(
                     'amount' => $request->input('amount'),
+                    'user_id' => $request->input('user_id'),
                     'currency' => env('PAYPAL_CURRENCY'),
                     'returnUrl' => url('paymentsuccess'),
                     'cancelUrl' => url('paymenterror'),
@@ -77,8 +78,11 @@ class PaymentController extends Controller
                     $payment->currency = env('PAYPAL_CURRENCY');
                     $payment->payment_status = $arr_body['state'];
                     $payment->save();
-                }
 
+                    $data = Transaction::find($arr_body['user_id']);
+                    $data->status = "Approved";
+                    $data->save();
+                }
                 return "Payment is successful. Your transaction id is: ". $arr_body['id'];
             } else {
                 return $response->getMessage();
@@ -90,7 +94,7 @@ class PaymentController extends Controller
 
     public function payment_error()
     {
-        return 'User is canceled the payment.';
+        return 'Transaction not successful.';
     }
 
 }

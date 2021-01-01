@@ -43,11 +43,13 @@
                                                         {{$value->updated_at->diffForHumans()}}
                                                     @else
 
-                                                    <form action="{{route('transactions.update', $value->id)}}" method="POST">
-                                                        @csrf
-                                                        {{ method_field('PATCH') }}
-                                                        <button onclick="return confirm('Are you sure you want to approve this transaction request...?')" class="bg-green-400 text-white hover:bg-green-300  px-4 py-2 mx-0 outline-none focus:shadow-outline">  Approve</button>
+                                                    <form action="{{ url('charge') }}" method="post">
+                                                        <input type="hidden" name="amount" value="{{$value->request_amount}}"/>
+                                                        <input type="hidden" name="user_id" value="{{$value->id}}"/>
+                                                        {{ csrf_field() }}
+                                                        <input type="submit" name="submit" value="Pay Now" class="bg-red-500 text-white hover:bg-red-400  px-4 py-2 mx-0 outline-none focus:shadow-outline">
                                                     </form>
+
                                                 @endif
                                                 @endadmin
                                                 @user
