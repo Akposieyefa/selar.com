@@ -25,10 +25,13 @@ Route::get('customers', 'HomeController@customers')->name('customers');// get al
 Route::delete('/customer-destroy/{id}', 'HomeController@destroy')->name('customer-destroy');//deleting users from database
 Route::resource('wallets', 'WalletController'); //wallet controller
 Route::resource('/transactions', 'TransactionController'); //transaction controller
+Route::get('admin-wallets', 'AdminAccessController@wallets')->name('admin-wallets');
+Route::get('admin-transactions', 'AdminAccessController@transactions')->name('admin-transactions');
 
-Route::get('payment', 'PayPalController@payment')->name('payment');
-Route::get('cancel', 'PayPalController@cancel')->name('payment.cancel');
-Route::get('payment/success', 'PayPalController@success')->name('payment.success');
+Route::get('payment', 'PaymentController@index');
+Route::post('charge', 'PaymentController@charge');
+Route::get('paymentsuccess', 'PaymentController@payment_success');
+Route::get('paymenterror', 'PaymentController@payment_error');
 
 
 Route::get('/text-pay-pal', function () {

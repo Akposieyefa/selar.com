@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Transaction;
 use App\Models\Wallet;
 use App\Mail\TransactionMail;
+use App\Notifications\TransactionNotification;
+use Notification;
 use Illuminate\Support\Facades\Mail;
 use Auth;
 class TransactionController extends Controller
@@ -17,14 +19,8 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        if (Auth::user()->role_id = 2) {
-            $data = Transaction::where('user_id', '=', Auth::user()->id)->get();
-            return  view('wallet.index', ['data' => $data]);
-
-        } elseif (Auth::user()->role_id = 1) {
-            $data = Transaction::paginate(5);
-            return  view('wallet.index', ['data' => $data]);
-        }
+            $data = Wallet::where('user_id', '=', Auth::user()->id)->get();
+            return  view('transaction.index', ['data' => $data]);
     }
 
     /**
@@ -68,6 +64,13 @@ class TransactionController extends Controller
         }catch  (\Exception $e) {
             return $e->getMessage();
         }
+        try {
+            Notification::route('slack', env('SLACK_WEBHOOK_URL'))
+                ->notify(new TransactionNotification());
+        } catch (\Exception $e) {
+           return  $e->getMessage();
+        }
+
         return redirect()->route('transactions.create')->with('success', 'Transaction initiated successfully');
     }
 
@@ -79,8 +82,9 @@ class TransactionController extends Controller
      */
     public function show($id)
     {
-        $data = Transaction::find($id);
-        return  view('wallet.show', ['data' => $data]);
+        $data = Transaction::where('wallet_id', '=', $id)->get();
+        $wallet = Wallet::find($id);
+        return  view('transaction.show', ['data' => $data, 'wallet' => $wallet]);
     }
 
     /**
@@ -104,7 +108,10 @@ class TransactionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = Transaction::find($id);
+        $data->status = "Approved";
+        $data->save();
+        dd('Thanks Akposieyefa');
     }
 
     /**

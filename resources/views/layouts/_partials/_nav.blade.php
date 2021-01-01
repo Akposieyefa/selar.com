@@ -38,16 +38,16 @@
             @else
 
                 @user
-                <li class="md:ml-4">
-                    <a class="block no-underline hover:underline py-2 text-grey-darkest hover:text-black md:border-none md:p-0" href="{{route('wallets.index')}}">
-                        My Wallet
-                    </a>
-                </li>
-                <li class="md:ml-4">
-                    <a class="block no-underline hover:underline py-2 text-grey-darkest hover:text-black md:border-none md:p-0" href="{{route('transactions.create')}}">
-                        My  Transaction
-                    </a>
-                </li>
+                    <li class="md:ml-4">
+                        <a class="block no-underline hover:underline py-2 text-grey-darkest hover:text-black md:border-none md:p-0" href="{{route('wallets.index')}}">
+                            My Wallet
+                        </a>
+                    </li>
+                    <li class="md:ml-4">
+                        <a class="block no-underline hover:underline py-2 text-grey-darkest hover:text-black md:border-none md:p-0" href="{{route('transactions.index')}}">
+                            My  Transaction
+                        </a>
+                    </li>
                 @enduser
 
                 @admin
@@ -57,12 +57,12 @@
                     </a>
                 </li>
                 <li class="md:ml-4">
-                    <a class="block no-underline hover:underline py-2 text-grey-darkest hover:text-black md:border-none md:p-0" href="{{route('wallets.index')}}">
+                    <a class="block no-underline hover:underline py-2 text-grey-darkest hover:text-black md:border-none md:p-0" href="{{route('admin-wallets')}}">
                         Wallets
                     </a>
                 </li>
                 <li class="md:ml-4">
-                    <a class="block no-underline hover:underline py-2 text-grey-darkest hover:text-black md:border-none md:p-0" href="">
+                    <a class="block no-underline hover:underline py-2 text-grey-darkest hover:text-black md:border-none md:p-0" href="{{route('admin-transactions')}}">
                         Transaction Request
                     </a>
                 </li>

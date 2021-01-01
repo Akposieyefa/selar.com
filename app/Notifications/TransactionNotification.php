@@ -5,21 +5,24 @@ namespace App\Notifications;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Messages\SlackMessage;
 
-class TransactionNotification extends Notification
+class TransactionNotification  extends Notification
 {
     use Queueable;
-    private $task;
+
+
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($task)
+    public function __construct()
     {
-        $this->task = $task;
+        //
     }
+
     /**
      * Get the notification's delivery channels.
      *
@@ -28,25 +31,35 @@ class TransactionNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['slack'];
+        return ['mail', 'slack'];
     }
+
     /**
-     * Get the Slack representation of the notification.
+     * Get the mail representation of the notification.
      *
      * @param  mixed  $notifiable
-     * @return \Illuminate\Notifications\Messages\SlackMessage
+     * @return \Illuminate\Notifications\Messages\MailMessage
      */
+    public function toMail($notifiable)
+    {
+        return (new MailMessage)
+            ->line('The introduction to the notification.')
+            ->action('Notification Action', url('/'))
+            ->line('Thank you for using our application!');
+    }
+
+
     public function toSlack($notifiable)
     {
-        $task = $this->task;
+        $message = "New Transaction initiated";
+
         return (new SlackMessage)
-            ->success()
-            ->content("New Transaction Alert")
-            ->attachment(function ($attachment) use ($task) {
-                $attachment->title($task->title, route('task', $task->id))
-                    ->content($task->description);
-            });
+            ->from('Orutu Akposieyefa W', ':ghost:')
+            ->to('#wn-test-akpos')
+            ->content('Fix service request by '.$message);
     }
+
+
     /**
      * Get the array representation of the notification.
      *
@@ -56,8 +69,7 @@ class TransactionNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'title' => $this->task->title,
-            'description' => $this->task->description
+            //
         ];
     }
 }

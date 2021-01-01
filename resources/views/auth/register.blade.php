@@ -1,6 +1,6 @@
 @extends('layouts.app')
-@section('content')<br><br><br><br>
-    <div class="container md:mx-auto">
+@section('content')
+    <div class="container md:mx-auto mt-10">
         <div class="flex flex-wrap">
             <div class="md:w-10/12 md:mx-auto">
                 <div class="flex flex-col break-words bg-white border border-2 rounded shadow-md">

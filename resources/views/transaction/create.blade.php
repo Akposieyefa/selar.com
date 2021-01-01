@@ -1,10 +1,10 @@
 @extends('layouts.app')
-@section('content') <br><br><br><br>
-    <div class="container md:mx-auto">
+@section('content')
+    <div class="container md:mx-auto mt-10">
         <div class="flex flex-wrap">
             <div class="md:w-10/12 md:mx-auto">
                 @include('layouts._partials._alert')
-                <a href="{{route('transactions.show', Auth::user()->id)}}" class="inline-block align-middle text-center select-none border font-bold whitespace-no-wrap py-2 px-4 rounded text-base leading-normal no-underline text-gray-100 bg-blue-500 hover:bg-blue-700">
+                <a href="{{route('transactions.index')}}" class="inline-block align-middle text-center select-none border font-bold whitespace-no-wrap py-2 px-4 rounded text-base leading-normal no-underline text-gray-100 bg-blue-500 hover:bg-blue-700">
                     {{ __('My Transactions') }}
                 </a> <br><br>
                 <div class="flex flex-col break-words bg-white border border-2 rounded shadow-md">

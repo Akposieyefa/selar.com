@@ -17,14 +17,8 @@ class WalletController extends Controller
      */
     public function index()
     {
-        if (Auth::user()->role_id = 2) {
             $data = Wallet::where('user_id', '=', Auth::user()->id)->get();
             return  view('wallet.index', ['data' => $data]);
-
-        } elseif (Auth::user()->role_id = 1) {
-            $data = Wallet::paginate(5);
-            return  view('wallet.index', ['data' => $data]);
-        }
     }
 
     /**
@@ -108,7 +102,17 @@ class WalletController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'currency' => 'required',
+            'desc' => 'required',
+            'name' => 'required'
+        ]);
+        $wallet = Wallet::find($id);
+        $wallet->name = $request->input('name');
+        $wallet->currency = $request->input('currency');
+        $wallet->desc = $request->input('desc');
+        $wallet->save();
+        return redirect()->route('wallets.edit', $id)->with('success', 'Your wallet have been updated successfully');
     }
 
     /**
